@@ -11,5 +11,7 @@ namespace MessangerClient.Model
         IEnumerable<Message> GetAllMessages();
 
         Task<IEnumerable<Message>> GetAllMessagesAsync();
+
+        Task SendMessageAsync(Message message);
     }
 }

@@ -30,6 +30,13 @@ namespace MessangerClient.Model
             return messages;
         }
 
+        public async Task SendMessageAsync(Message message)
+        {
+            messages.Add(message);
+
+            await Task.Delay(1000);
+        }
+
         private List<Message> messages;
     }
 }
