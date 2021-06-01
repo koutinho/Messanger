@@ -51,6 +51,51 @@ namespace MessangerClient.ViewModels
         }
         private string _messageText;
 
+        public DateTime? From
+        {
+            get
+            {
+                return _from;
+            }
+
+            set
+            {
+                SetValue(ref _from, value);
+                ApplyFiltering();
+            }
+        }
+        private DateTime? _from;
+
+        public DateTime? To
+        {
+            get
+            {
+                return _to;
+            }
+
+            set
+            {
+                SetValue(ref _to, value);
+                ApplyFiltering();
+            }
+        }
+        private DateTime? _to;
+
+        public bool EnableFilter
+        {
+            get
+            {
+                return enableFilter;
+            }
+
+            set
+            {
+                SetValue(ref enableFilter, value);
+                ApplyFiltering();
+            }
+        }
+        private bool enableFilter;
+
         public ICollectionView MessagesView
         {
             get
@@ -96,6 +141,18 @@ namespace MessangerClient.ViewModels
 
             MessageViewModel messageViewModel = new MessageViewModel(currentDateTime, Environment.UserName, text);
             Messages.Add(messageViewModel);
+        }
+
+        private void ApplyFiltering()
+        {
+            if (EnableFilter && From != null && To != null)
+            {
+                MessagesView.Filter = new Predicate<object>(x => ((MessageViewModel)x).SendDateTime >= From && ((MessageViewModel)x).SendDateTime <= To);
+            }
+            else
+            {
+                MessagesView.Filter = null;
+            }
         }
     }
 }

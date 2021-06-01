@@ -13,10 +13,45 @@
     </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ListBox ItemsSource="{Binding MessagesView}"
+
+        <StackPanel Margin="10">
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock FontSize="18" Margin="0 0 5 0">От:</TextBlock>
+                <dxe:DateEdit EditValue="{Binding Path=From, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          Mask="dd.MM.yyyy    HH:mm:ss"
+                          Width="161" MinWidth="161"
+                          MaskUseAsDisplayFormat="True"
+                          NullText="(Введите дату и время)"
+                          NullValueButtonPlacement="EditBox">
+                    <dxe:DateEdit.StyleSettings>
+                        <dxe:DateEditNavigatorWithTimePickerStyleSettings/>
+                    </dxe:DateEdit.StyleSettings>
+                </dxe:DateEdit>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock FontSize="18" Margin="0 0 5 0">До:</TextBlock>
+                <dxe:DateEdit EditValue="{Binding Path=To, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          Mask="dd.MM.yyyy    HH:mm:ss"
+                          Width="161" MinWidth="161"
+                          MaskUseAsDisplayFormat="True"
+                          NullText="(Введите дату и время)"
+                          NullValueButtonPlacement="EditBox">
+                    <dxe:DateEdit.StyleSettings>
+                        <dxe:DateEditNavigatorWithTimePickerStyleSettings/>
+                    </dxe:DateEdit.StyleSettings>
+                </dxe:DateEdit>
+            </StackPanel>
+
+            <dxe:CheckEdit Content="Фильтр" IsChecked="{Binding EnableFilter}"/>
+        </StackPanel>
+        
+        <ListBox Grid.Row="1"
+                 ItemsSource="{Binding MessagesView}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -41,7 +76,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+        <StackPanel Grid.Row="1"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
                     Visibility="{Binding LoadAllMessagesCommand.IsExecuting, Converter={dxmvvm:BooleanToVisibilityConverter}}">
             <TextBlock TextAlignment="Center"><Run Text="Загрузка сообщений"/></TextBlock>
             <dxe:ProgressBarEdit Margin="0 5 0 0"
@@ -51,7 +87,8 @@
                 </dxe:ProgressBarEdit.StyleSettings>
             </dxe:ProgressBarEdit>
         </StackPanel>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+        <StackPanel Grid.Row="1"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
                     Visibility="{Binding SendMessageCommand.IsExecuting, Converter={dxmvvm:BooleanToVisibilityConverter}}">
             <TextBlock TextAlignment="Center"><Run Text="Отправка сообщения"/></TextBlock>
             <dxe:ProgressBarEdit Margin="0 5 0 0"
@@ -62,7 +99,7 @@
             </dxe:ProgressBarEdit>
         </StackPanel>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
