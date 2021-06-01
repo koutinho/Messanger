@@ -4,9 +4,46 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MessangerClient"
-        mc:Ignorable="d"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        mc:Ignorable="d" 
         Title="{Binding Title}" Height="450" Width="800">
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding LoadAllMessagesCommand}"/>
+    </dxmvvm:Interaction.Behaviors>
     <Grid>
-        
+        <ListBox ItemsSource="{Binding MessagesView}"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding UserName}" Margin="0 0 5 0"
+                                       Foreground="#A0A2A5"/>
+                            <TextBlock Text="{Binding SendDateTime}" Foreground="#A0A2A5"/>
+                        </StackPanel>
+                        
+                        <Border Grid.Row="1" Background="#F2F6F9"
+                                Padding="10" Margin="0 2 0 0"
+                                CornerRadius="0 5 5 5">
+                            <TextBlock Text="{Binding Text}" TextWrapping="Wrap"/>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Visibility="{Binding LoadAllMessagesCommand.IsExecuting, Converter={dxmvvm:BooleanToVisibilityConverter}}">
+            <TextBlock TextAlignment="Center">Загрузка сообщений</TextBlock>
+            <dxe:ProgressBarEdit Margin="0 5 0 0"
+                             Width="300" Height="30">
+                <dxe:ProgressBarEdit.StyleSettings>
+                    <dxe:ProgressBarMarqueeStyleSettings/>
+                </dxe:ProgressBarEdit.StyleSettings>
+            </dxe:ProgressBarEdit>
+        </StackPanel>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using MessangerClient.ViewModels;
+﻿using MessangerClient.Model;
+using MessangerClient.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,7 +19,9 @@ namespace MessangerClient
         {
             base.OnStartup(e);
 
-            MainWindowViewModel viewModel = new MainWindowViewModel();
+            IMessageManager messageManager = new MockedMessageManager();
+
+            MainWindowViewModel viewModel = new MainWindowViewModel(messageManager);
 
             MainWindow view = new MainWindow();
             view.DataContext = viewModel;
