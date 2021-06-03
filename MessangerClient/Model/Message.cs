@@ -8,6 +8,9 @@ namespace MessangerClient.Model
 {
     public class Message
     {
+        public Message ()
+        { }
+
         public Message(DateTime sendDateTime, string userName, string text)
         {
             SendDateTime = sendDateTime;

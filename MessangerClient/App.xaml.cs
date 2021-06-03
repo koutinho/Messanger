@@ -19,7 +19,7 @@ namespace MessangerClient
         {
             base.OnStartup(e);
 
-            IMessageManager messageManager = new MockedMessageManager();
+            IMessageManager messageManager = new WebApiMessageManager();
 
             MainWindowViewModel viewModel = new MainWindowViewModel(messageManager);
 
