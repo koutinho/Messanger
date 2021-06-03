@@ -28,7 +28,7 @@ namespace MessangerWebApi
         {
 
             services.AddControllers();
-            services.AddSingleton<IMessageRepository, MockedMessageRepository>();
+            services.AddSingleton<IMessageRepository, JsonMessageRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
